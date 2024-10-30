@@ -85,7 +85,7 @@ function olderThanMe(personAge) {
     if (personAge > myAge) {
         return "The person is older than me";
     } else if (personAge < myAge) {
-        return "I am older than that person";  // Corrected typo here
+        return "I am older than person";  
     } else {
         return "We are the same age";  
     }
