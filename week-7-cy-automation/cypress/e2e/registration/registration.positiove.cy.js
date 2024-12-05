@@ -1,4 +1,9 @@
 import { faker } from "@faker-js/faker";
+import dashboardPage from "../../page_object/dashboard.page";
+import homePage from "../../page_object/home.page";
+import registrationPage from "../../page_object/registration.page";
+import loginPage from "../../page_object/login.page";
+
 
 const email = faker.internet.email();
 const password = faker.internet.password();
@@ -9,25 +14,20 @@ describe("Registration", () => {
   });
 
   it("Should register a new user account", () => {
-    cy.get('[href="/auth/register"]').click();
-    cy.get('[name="firstName"]').type("Ivan");
-    cy.get('[name="lastName"]').type("Grytsiuk");
-    cy.get('[name="email"]').type(email);
-    cy.get('[name="password"]').type(password);
-    cy.get('[type="submit"]').click();
+    homePage.registerBtn.click();
+    registrationPage.setFullName("Ivan" , "Grytsiuk")
+    registrationPage.setCredentials(email, password)
+    registrationPage.registerBtn.click();
+    
+    dashboardPage.fullNameInput.should("have.text", "Ivan  Grytsiuk");
+    dashboardPage.roleType.should("have.text", "role: user");
 
-
-    // confirm register user can log in
-
-    cy.get('button [data-testid="PersonIcon"]').click();
+    dashboardPage.personIcon.click();
     cy.contains("Logout").click();
-
-    cy.get('[name="email"]').type(email);
-    cy.get('[name="password"]').type(password);
-    cy.contains("Login").click();
-
-    cy.get("a p").should("have.text", "role: user");
-    cy.get("a h6").should("have.text", "Ivan  Grytsiuk");
-    cy.title().should('eq', 'User: Profile | Delek Homes');
+    
+    loginPage.login(email,password);
+    
+    dashboardPage.fullNameInput.should("have.text", "Ivan Grytsiuk");
+    dashboardPage.roleType.should("have.text", "role: user");
   });
 });

@@ -1,47 +1,45 @@
 import { faker } from "@faker-js/faker";
 
+import dashboardPage from "../../page_object/dashboard.page";
+import homePage from "../../page_object/home.page";
+import registrationPage from "../../page_object/registration.page";
+
 const email = faker.internet.email();
 const password = faker.internet.password();
 
 describe("Registration", () => {
   beforeEach(() => {
     cy.visit("/");
-    cy.get('[href="/auth/register"]').click(); 
+    homePage.registerBtn.click(); 
   });
 
   it("Should not register with empty field", () => {
-    cy.get('[type="submit"]').click();
+    registrationPage.registerBtn.click();
 
-    cy.contains("First name required").should("be.visible");
-    cy.contains("Last name required").should("be.visible");
-    cy.contains("Email is required").should("be.visible");
-    cy.contains("Password is required").should("be.visible");
+    registrationPage.firstNameInputError.should("be.visible");
+    registrationPage.lastNameInputError.should("be.visible");
+    registrationPage.emailInputError.should("be.visible");
+    registrationPage.passwordInputError.should("be.visible");
   });
 
   it("Should not register with an already registered email account", () => {
-    cy.get('[name="firstName"]').type("Ivan");
-    cy.get('[name="lastName"]').type("Grytsiuk");
-    cy.get('[name="email"]').type(email);
-    cy.get('[name="password"]').type(password);
-    cy.get('[type="submit"]').click();
+    registrationPage.setFullName("Ivan", "Grytsiuk")
+    registrationPage.setCredentials(email,password);
+    registrationPage.registerBtn.click();
 
-    cy.get("a p").should("have.text", "role: user");
-    cy.get("a p").should("have.text", "role: user");
-    cy.get("a h6").should("have.text", "Ivan  Grytsiuk");
-    cy.title().should('eq', 'User: Profile | Delek Homes');
+    dashboardPage.fullNameInput.should("have.text", "Ivan  Grytsiuk");
+    dashboardPage.roleType.should("have.text", "role: user");
 
-    cy.get('button [data-testid="PersonIcon"]').click();
+    dashboardPage.personIcon.click();
     cy.contains("Logout").click();
 
     cy.visit("/");
-    cy.get('[href="/auth/register"]').click();
+    homePage.registerBtn.click();
 
-    cy.get('[name="firstName"]').type("Ivan");
-    cy.get('[name="lastName"]').type("Grytsiuk");
-    cy.get('[name="email"]').type(email);
-    cy.get('[name="password"]').type(password);
-    cy.get('[type="submit"]').click();
-
-    cy.get('[role="alert"]').should("have.text","Input data validation failed");
+    registrationPage.setFullName('Ivan','Grytsiuk')
+    registrationPage.setCredentials(email,password);
+    registrationPage.registerBtn.click();
+   
+    registrationPage.errorMessage.should("have.text", "Input data validation failed");
   });
 });

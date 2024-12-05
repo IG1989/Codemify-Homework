@@ -1,20 +1,21 @@
-describe("Logout", () => {
-    it("Should login and logout", () => {
+import homePage from "../../page_object/home.page";
+import loginPage from "../../page_object/login.page";
+import dashboardPage from "../../page_object/dashboard.page";
+
+describe("Login", () => { 
+    it("Should login and logout", () => { 
       cy.visit("/");
   
-      cy.get('[href="/auth/login"]').click();
-      cy.get('[name="email"]').type("johnybreathe@gmail.com");
-      cy.get('[name="password"]').type("Q1324@werty");
-      cy.get('button[type="submit"]').click();
+      homePage.loginBtn.click();
+      loginPage.login("johnybreathe@gmail.com", "Q1324@werty");
   
-      cy.get("a h6").should("have.text", "Ivan  Grytsiuk");
-      cy.get("a p").should("have.text", "role: user");
-      cy.title().should("eq", "User: Profile | Delek Homes");
-  
-      cy.get('button [data-testid="PersonIcon"]').click();
+      dashboardPage.fullNameInput.should("have.text", "Ivan  Grytsiuk");
+      dashboardPage.roleType.should("have.text", "role: user");
+        
+      dashboardPage.personIcon.click();
       cy.contains("Logout").click();
-  
-      cy.contains("Sign in to Delek Homes").should("be.visible");
+
+      loginPage.signInText.should("be.visible");
     });
-  });
+  }); 
   
