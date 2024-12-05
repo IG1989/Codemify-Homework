@@ -26,6 +26,7 @@ describe("Registration", () => {
     cy.get('[type="submit"]').click();
 
     cy.get("a p").should("have.text", "role: user");
+    cy.get("a p").should("have.text", "role: user");
     cy.get("a h6").should("have.text", "Ivan  Grytsiuk");
     cy.title().should('eq', 'User: Profile | Delek Homes');
 
