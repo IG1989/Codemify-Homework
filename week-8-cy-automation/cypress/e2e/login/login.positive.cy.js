@@ -14,7 +14,6 @@ describe('Login', () => {
     loginPage.passwordInput.type('Q1324@werty');
     loginPage.loginBtn.click();
 
-    // Verify user role
     dashboardPage.roleLabel.should('have.text', 'role: user');
     dashboardPage.fullNameLabel.should('have.text', 'Ivan Grytsiuk');
   })
