@@ -1,11 +1,12 @@
 import homePage from "../../page_object/home.page";
-import listingPage from "../../page_object/listing.page";
+import featuredListingPage from "../../page_object/featured.listing.page";
 
 describe('Search Home Page', () => {
   beforeEach(() => {
     cy.on('uncaught:exception', (err, runnable) => {
       return false
-    })
+    });
+    
     cy.visit('/');
     homePage.nightModeOn.click();
   });
@@ -14,7 +15,7 @@ describe('Search Home Page', () => {
     homePage.searchInput.eq(0).type('Pasadena');
     homePage.startSearch.click();
 
-    listingPage.listingTitle.should('have.text', 'Modern Family House in Pasadena');
+    featuredListingPage.listingTitle.should('have.text', 'Modern Family House in Pasadena');
   });
 
   it('Should search by bedrooms, T90', () => {
@@ -22,18 +23,18 @@ describe('Search Home Page', () => {
     homePage.bedroomsInput.click();
     homePage.startSearch.click();
 
-    listingPage.bedroomIcon.should('not.have.text', '0,1');
+    featuredListingPage.bedroomIcon.should('not.have.text', '0,1');
   });
   
   it('Should search by city, T91', () => {
     homePage.cityInput.eq(1).type('Pasadena');
     homePage.startSearch.click();
 
-    listingPage.listingTitle.should('have.text', 'Modern Family House in Pasadena');
+    featuredListingPage.listingTitle.should('have.text', 'Modern Family House in Pasadena');
   }); 
 
   it('Should search by price, T92', () => {
-  listingPage.priceRange;
+    featuredListingPage.priceRange;
 
   }); 
 });

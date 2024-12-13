@@ -1,9 +1,7 @@
 class LoginPage {
-    get emailInput() {return cy.get('[name="email"]')};
-    get passwordInput() {return cy.get('[name="password"]')};
-    get loginBtn() {return cy.get('button[type="submit"]')};
-    get signInText() {return cy.contains("Sign in to Delek Homes")};
-    get personIcon() {return cy.get('button[data-testid="PersonIcon"]')};
+    get emailInput() { return cy.get('[name="email"]') };
+    get passwordInput() { return cy.get('[name="password"]') };
+    get loginBtn() { return cy.contains('Login') };
 
     login(email, password) {
         this.emailInput.type(email);

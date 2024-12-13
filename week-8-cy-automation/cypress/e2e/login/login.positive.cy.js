@@ -1,16 +1,19 @@
-import homePage from "../../page_object/home.page";
-import loginPage from "../../page_object/login.page";
-import dashboardPage from "../../page_object/dashboard.page";
+import loginPage from "../../page_object/login.page"
+import dashboardPage from "../../page_object/dashboard.page"
+import homePage from "../../page_object/home.page"
 
-describe("Login", () => {
-  it("Should login", () => {
-    cy.visit("/");
+describe('Login', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  });
 
+  it('Should log with existing account as user, T84', () => {
     homePage.loginBtn.click();
-    loginPage.login("johnybreathe@gmail.com", "Q1324@werty");
+    loginPage.emailInput.type('johnybreathe@gmail.com');
+    loginPage.passwordInput.type('Q1324@werty');
+    loginPage.loginBtn.click();
 
-    dashboardPage.fullNameInput.should("have.text", "Ivan  Grytsiuk");
-    dashboardPage.roleType.should("have.text", "role: realtor");
-
+    dashboardPage.roleLabel.should('have.text', 'role: realtor');
+    dashboardPage.fullNameLabel.should('have.text', 'Ivan  Grytsiuk');
   });
 });

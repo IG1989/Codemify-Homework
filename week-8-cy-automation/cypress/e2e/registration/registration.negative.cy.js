@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 import dashboardPage from "../../page_object/dashboard.page";
 import homePage from "../../page_object/home.page";
-import RegistrationPage from './path/to/RegistrationPage';
+import registrationPage from "../../page_object/registration.page";
 
 const email = faker.internet.email();
 const password = faker.internet.password();
@@ -10,19 +10,19 @@ const password = faker.internet.password();
 describe("Registration", () => {
   beforeEach(() => {
     cy.visit("/");
-    homePage.registrationBtn.click(); 
+    homePage.registerBtn.click(); 
   });
 
-  it("Should not register with empty field", () => {
+  it("Should not register with empty field, T86", () => {
     registrationPage.registerBtn.click();
 
-    registrationPage.firstNameInputError.should("be.visible");
-    registrationPage.lastNameInputError.should("be.visible");
-    registrationPage.emailInputError.should("be.visible");
-    registrationPage.passwordInputError.should("be.visible");
+    registrationPage.firstNameInput.should("be.visible");
+    registrationPage.lastNameInput.should("be.visible");
+    registrationPage.emailInput.should("be.visible");
+    registrationPage.passwordInput.should("be.visible");
   });
 
-  it("Should not register with an already registered email account", () => {
+  it("Should not register with an already registered email account, T87", () => {
     registrationPage.setFullName("Ivan", "Grytsiuk")
     registrationPage.setCredentials(email,password);
     registrationPage.registerBtn.click();
@@ -34,10 +34,10 @@ describe("Registration", () => {
     cy.contains("Logout").click();
 
     cy.visit("/");
-    homePage.registrationBtn.click();
+    homePage.registerBtn.click();
 
-    registrationPage.setFullName('Ivan','Grytsiuk')
-    registrationPage.setCredentials(email,password);
+    registrationPage.setFullName('Ivan', 'Grytsiuk')
+    registrationPage.setCredentials(email, password);
     registrationPage.registerBtn.click();
    
     registrationPage.errorMessage.should("have.text", "Input data validation failed");

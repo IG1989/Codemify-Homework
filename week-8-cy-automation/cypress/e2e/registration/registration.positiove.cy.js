@@ -1,9 +1,8 @@
 import { faker } from "@faker-js/faker";
-
 import dashboardPage from "../../page_object/dashboard.page";
 import homePage from "../../page_object/home.page";
+import registrationPage from "../../page_object/registration.page";
 import loginPage from "../../page_object/login.page";
-import RegistrationPage from './path/to/RegistrationPage';
 
 
 const email = faker.internet.email();
@@ -14,8 +13,8 @@ describe("Registration", () => {
     cy.visit("/");
   });
 
-  it("Should register a new user account", () => {
-    homePage.registrationPage.click();
+  it("Should register a new user account, T88", () => {
+    homePage.registerBtn.click();
     registrationPage.setFullName("Ivan" , "Grytsiuk")
     registrationPage.setCredentials(email, password)
     registrationPage.registerBtn.click();
@@ -28,7 +27,7 @@ describe("Registration", () => {
     
     loginPage.login(email,password);
     
-    dashboardPage.fullNameInput.should("have.text", "Ivan Grytsiuk");
+    dashboardPage.fullNameInput.should("have.text", "Ivan  Grytsiuk");
     dashboardPage.roleType.should("have.text", "role: user");
   });
 });

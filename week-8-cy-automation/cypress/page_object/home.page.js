@@ -1,7 +1,7 @@
-class Homepage {
+class homePage {
     
     get loginBtn() { return cy.get('[href="/auth/login"]') }
-    get registrationBtn() { return cy.get('[href="/auth/register"]') }
+    get registerBtn() { return cy.get('[href="/auth/register"]') }
     get nightModeOn() { return cy.get('[class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"]')}
     get searchInput() { return cy.get('[type="text"]')}
     get startSearch() { return cy.get('[type="button"]')}
@@ -11,4 +11,5 @@ class Homepage {
     get featureListingBtn() { return cy.get('.MuiBox-root.css-12z0wuy').eq(1)}
     
 }
-    export default new Homepage();
+
+export default new homePage();
